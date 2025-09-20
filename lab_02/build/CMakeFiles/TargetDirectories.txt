@@ -1,0 +1,3 @@
+/home/egor-glazachev/Документы/Git/lab/lab_02/build/CMakeFiles/lab_02.dir
+/home/egor-glazachev/Документы/Git/lab/lab_02/build/CMakeFiles/edit_cache.dir
+/home/egor-glazachev/Документы/Git/lab/lab_02/build/CMakeFiles/rebuild_cache.dir
