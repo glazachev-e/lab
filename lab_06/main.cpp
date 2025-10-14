@@ -150,13 +150,17 @@ int main() {
             std::cout << "Введите "  << i+1 << " строку: ";
             for (int j = 0; j < m; ++j) {
                 std::cin >> m1;
-                if (m1 < 0) {
-                    m1 = 0;
-                }
                 x[i][j] = m1;
                 if (m1<mn || (m1==mn && j<t)) {
                     mn = m1;
                     t = j;
+                }
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (j==t && x[i][j]<0) {
+                    x[i][j] = 0;
                 }
             }
         }
@@ -175,61 +179,73 @@ int main() {
         std::cout << "Введите длину последовательности: ";
 		std::cin >> n1;
 		const int n = n1;
-        int x[n];
+        int x[20000];
+        int n2, n3, c1 = 0, c2;
+        bool flag1, flag2;
         std::cout << "Введите члены последовательности: ";
 		for (int i = 0; i < n; ++i) {
             std::cin >> n1;
-            x[i] = n1;
+            x[i]=n1;
         }
-        std::cout << "Введите сколько членов хотите удалить: ";
-		std::cin >> n1;
-        if (n1!=0)
-            std::cout << "Введите номера элементов, которые хотите удалить(начиная с нуля): ";
-        const int m = n1;
-        int y[m];
-        for (int i = 0; i < m; ++i) {
-            std::cin >> n1;
-            y[i] = n1;
-        }
-        std::cout << "Введите сколько членов хотите продублировать: ";
-		std::cin >> n1;
-        if (n1!=0)
-            std::cout << "Введите номера элементов, которые хотите продублировать(не совпадают с удалёнными): ";
-        const int l = n1;
-        int z[l];
-        for (int i = 0; i < l; ++i) {
-            std::cin >> n1;
-            z[i] = n1;
-        }
-        const int f = n-m+l;
-        int w[f];
-        int c = 0;
-        bool flag;
-        for (int i = 0; i < n; ++i){
-            flag = 0;
-            for(int j = 0; j < m; ++j) {
-                if (i == y[j]) {
-                    flag = 1;
-                    break;
+        int i = 0;
+        while (i<n) {
+            n1 = x[i];
+            flag1 = 0;
+            c1 = 0;
+            while (n1>0 && !flag1){
+                n2 = x[i];
+                ++c1;
+                c2 = 0;
+                while (n2>0){
+                    ++c2;
+                    if (n1%10==n2%10 && c1!=c2){
+                        flag1 = 1;
+                        break;                    
+                    }
+                    n2/=10;
                 }
+                n1/=10;
             }
-            if (flag) {
-                continue;
+            if (flag1) {
+                for (int j = i; j<n; ++j) {                   
+                        x[j] = x[j+1];
+                }            
             }
-            w[c] = x[i];
-            ++c;
-            for(int j = 0; j < l; ++j) {
-                if (i == z[j]) {
-                    w[c] = x[i];
-                    ++c;
-                }
+            else {
+                ++i;
             }
         }
+        i = 0;
+        while (i<20000){
+            n1 = x[i];
+            flag2 = 0;
+            while (n1>0) {
+                if (n1%10==5){
+                    flag2 = 1;
+                    break;                
+                }
+                n1/=10;
+            }
+            if (flag2) {
+                n1 = x[i];
+                for (int j = i+1; j<20000; ++j) {
+                    n2 = x[j]; 
+                    x[j] = n1; 
+                    n1 = n2;              
+                }
+                ++i;
+            }
+            ++i;
+        }
+        
+        
+        
         std::cout << "Итоговая последовательность: ";
-        for (int i = 0; i < f; ++i) {
-                std::cout << w[i] << " ";
+        for (int i = 0; i < 15; ++i) {
+            std::cout << x[i] << " ";
         }
         std::cout << std::endl;
+        
 	}
 	else {
 		std::cout << "Введен несуществующий пункт" << std::endl;
